@@ -113,6 +113,23 @@ If you want to have a look on my training experience explore [Training Results](
 ## Quality of Tracking
 If you want only evaluate the Tracking algorithm SORT vs. Deep SORT there is the script `evaluation_tracking.py` for evaluate only the tracking algorithm by [py-motmetrics](https://github.com/cheind/py-motmetrics). You need the labeled dataset for this.
 
+## References
+
+### Segmentation (Mask R-CNN)
+- Y. Wu, A. Kirillov, F. Massa, W.-Y. Lo und R. Girshick, [Detectron2](https://github.com/facebookresearch/detectron2), 2019.
+- K. He, G. Gkioxari, P. Dollár and R. Girshick, "Mask R-CNN," in IEEE Transactions on Pattern Analysis and Machine Intelligence, vol. 42, no. 2, pp. 386-397, 1 Feb. 2020, doi: 10.1109/TPAMI.2018.2844175.
+### Tracking
+- N. Wojke, A. Bewley and D. Paulus, "Simple online and realtime tracking with a deep association metric," 2017 IEEE International Conference on Image Processing (ICIP), 2017, pp. 3645-3649, doi: 10.1109/ICIP.2017.8296962.
+- ZQPei, [Deep Sort with PyTorch](https://github.com/ZQPei/deep_sort_pytorch), 2020.
+### Georeferencing
+- pyproj4, [Python interface to PROJ](https://github.com/pyproj4/pyproj), 2020.
+### Related Work
+
+- A. Clausse, S. Benslimane and A. de La Fortelle, "Large-Scale extraction of accurate vehicle trajectories for driving behavior learning," 2019 IEEE Intelligent Vehicles Symposium (IV), 2019, pp. 2391-2396, doi: 10.1109/IVS.2019.8814095.
+- D. Notz, F. Becker, T. Kühbeck and D. Watzenig, "Extraction and Assessment of Naturalistic Human Driving Trajectories from Infrastructure Camera and Radar Sensors," 2020 IEEE 16th International Conference on Automation Science and Engineering (CASE), 2020, pp. 455-462, doi: 10.1109/CASE48305.2020.9216992.
+
+
+
 ## Acknowledgment
 This work is supported by the German Federal Ministry of Transport and Digital Infrastructure (BMVI) within the *Automated and Connected Driving* funding program under Grant No. 01MM20012F (SAVeNoW).
 
