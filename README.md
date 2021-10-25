@@ -31,7 +31,7 @@ network, a tracking algorithm and extraction the trajectories to a csv file.
 
 The training results (logs and metrics) are provided [here](./training_log_results/README.md)
 
-Example videos are provided [here](./example_videos). You need to use [Git LFS](https://git-lfs.github.com/) for access the videos.
+Example videos of our approach are provided [here](./example_videos). 
 
 ## Installation
 1. Install [Miniconda](https://docs.conda.io/en/latest/miniconda.html)
