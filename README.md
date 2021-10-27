@@ -54,7 +54,7 @@ python -m pip install detectron2 -f \
 
 ## Getting Started Video
 
-If you don't have a video just capture one here [Quick Start Capture Video from Stream ](captureVideostream/README.md)
+If you don't have a video just capture one here [Quick Start Capture Video from Stream ](camera_stream_recording/README.md)
 
 For extracting trajectories `cd traffic_monitoring` and run it on a specific video. If you don't have one, just use this provided demo video:
 
