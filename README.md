@@ -7,7 +7,7 @@ The associated paper for this project will be published here as soon as possible
 author = {Strosahl, Julian},
 license = {Apache-2.0},
 title = {{TrafficMonitoring}},
-url = {https://github.com/EFS-OpenSource/TrafficMonitoring},
+url = {https://github.com/jul095/TrafficMonitoring},
 version = {0.9.0}
 }
 ```
