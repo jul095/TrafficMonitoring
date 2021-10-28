@@ -59,10 +59,10 @@ If you don't have a video just capture one here [Quick Start Capture Video from 
 For extracting trajectories `cd traffic_monitoring` and run it on a specific video. If you don't have one, just use this provided demo video:
 
 ```
-python run_on_video.py --video ./videos/2021-01-13_16-32-09.mp4
+python run_on_video.py --video ./videos/small_example_video.mp4
 ```
 
-The annotated video with segmentations will be stored in [videos_output](./traffic_monitoring/videos/video_output) and the trajectory file in [trajectory_output](./traffic_monitoring/videos/trajectory_output). The both result folders will be created by the script.
+The annotated video with segmentations will be stored in [videos_output](./traffic_monitoring/videos/videos_output) and the trajectory file in [trajectory_output](./traffic_monitoring/videos/trajectory_output). The both result folders will be created by the script.
 
 The trajectory file provides following structure: 
 
