@@ -187,8 +187,8 @@ def run_on_video(video_capture, predictor, max_frames, video_file_timestamp, vid
                 cv2.circle(frame, (int(pixel_middle_point[0]), int(pixel_middle_point[1])), 2, (255, 255, 0), 2)
                 #  cv2.circle(frame, middle_point_bbox, 2, (0, 0, 255), 2)
         cv2.rectangle(frame, (0, 0), (565, 36), (166,166,166), -1)
-        # cv2.imshow("frame", frame)
-        # cv2.waitKey(1)
+        cv2.imshow("frame", frame)
+        cv2.waitKey(1)
 
         #  visualization = visualizer.draw_instance_predictions(frame, outputs["instances"].to("cpu"))
         #  visualization = cv2.cvtColor(visualization.get_image(), cv2.COLOR_RGB2BGR)
