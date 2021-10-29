@@ -25,9 +25,9 @@ class EstimateVehicleBasePlate:
     Algorithms to find the Base Plate of an vehicle
     for finding the optimal reference point of an vehicle
     """
-    def __init__(self):
+    def __init__(self, passpoints_file_path):
         self.visualizer = Visualizer()
-        self.camera = CameraCalibration()
+        self.camera = CameraCalibration(passpoints_file_path)
 
     @DeprecationWarning
     def minimum_bounding_rectangle(self, points):

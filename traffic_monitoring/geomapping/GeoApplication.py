@@ -21,10 +21,8 @@ from PIL import ImageTk, Image
 
 class GeoApplication:
 
-    def __init__(self):
-        path = os.path.abspath(__file__)
-        dir_path = os.path.dirname(path)
-        self.points_file_path = os.path.join(dir_path, '../config/frame0_measurement.png.points')
+    def __init__(self, passpoint_file):
+        self.points_file_path = passpoint_file
         self.image_path = '../config/frame0_measurement.png'
         self.points_image = []
         self.points_citygml = []
@@ -156,7 +154,10 @@ class GeoApplication:
 
 
 if __name__ == '__main__':
-    geoApp = GeoApplication()
+    path = os.path.abspath(__file__)
+    dir_path = os.path.dirname(path)
+    points_file_path = os.path.join(dir_path, '../config/frame0_measurement.png.points')
+    geoApp = GeoApplication(points_file_path)
     #  geoApp.start_from_scratch()
     geoApp.start_with_qgis()
     geoApp.show_click_demo()

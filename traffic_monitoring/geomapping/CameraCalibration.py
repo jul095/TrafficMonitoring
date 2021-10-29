@@ -26,12 +26,12 @@ class CameraCalibration:
     Class for mapping between pixel and world (geographic) coordinate system
     """
 
-    def __init__(self):
+    def __init__(self, passpoints_file_path):
 
         path = os.path.abspath(__file__)
         self.dir_path = os.path.dirname(path)
 
-        self.geo_application = GeoApplication()
+        self.geo_application = GeoApplication(passpoints_file_path)
 
         self.world_points = []
         self.pixel_points = []

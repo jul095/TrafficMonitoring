@@ -38,6 +38,8 @@ Main Python Module for traffic trajectory extraction
 def parse_args():
     parser = argparse.ArgumentParser('Extract trajectories based on video')
     parser.add_argument('--video', default=None, type=str, help="specific mp4 video file")
+    parser.add_argument('--passpoints', default='./config/frame0_measurement.png.points', type=str, help="specific passpoint matching file for georeferencing")
+    parser.add_argument('--valid-area', default='./config/valid_area.csv', type=str, help="specific area definition. Within this pixel area segmentation are evaluated")
     return parser.parse_args()
 
 
@@ -80,11 +82,11 @@ def prepare_video_processing(video_file, video_source_folder, cfg):
     return video, predictor, video_writer, num_frames
 
 
-def prepare_valid_area(frame):
+def prepare_valid_area(frame, valid_area_file_path):
     """
     Reads a csv file in pixel coordinates for a geofence at the image borders
     """
-    valid_area_df = pd.read_csv('config/valid_area.csv')
+    valid_area_df = pd.read_csv(valid_area_file_path)
     valid_area = valid_area_df.to_numpy()
     valid_area = valid_area.reshape((-1, 1, 2))
     cv2.polylines(frame, [valid_area], True, (255, 0, 0), thickness=2)
@@ -100,20 +102,20 @@ def check_if_in_valid_area(polygon_segmentation):
     return polygon.within(valid_area)
 
 
-def run_on_video(video_capture, predictor, max_frames, video_file_timestamp, video_file_folder, category_names=None):
+def run_on_video(video_capture, predictor, max_frames, video_file_timestamp, video_file_folder, passpoints_file_path, valid_area_file_path, category_names=None):
     """
     Main Method for handling traffic trajectory extraction
     """
     read_frames = 0
     tracker = TrackerSelector(TrackingMode.DEEP_SORT)
-    estimate_base_plate = EstimateVehicleBasePlate()
+    estimate_base_plate = EstimateVehicleBasePlate(passpoints_file_path)
     extract_trajectories = ExtractTrajectories(
         os.path.join(video_file_folder, 'trajectory_output', f"{video_file_timestamp}_trajectories.csv"))
 
     vis = Visualizer()
     tracked_object_dict = {}
     trajectory_points_dict = {}
-    camera = CameraCalibration()
+    camera = CameraCalibration(passpoints_file_path)
 
     while True:
 
@@ -137,7 +139,7 @@ def run_on_video(video_capture, predictor, max_frames, video_file_timestamp, vid
             score = bb['score'] * 100
 
             middle_point_bbox = calc_center(bbox)
-            prepare_valid_area(frame)
+            prepare_valid_area(frame, valid_area_file_path)
 
             trajectory_points_dict[track_id] = trajectory_points_dict.get(track_id, [])
             trajectory_points_dict[track_id].append(middle_point_bbox)
@@ -198,7 +200,7 @@ def run_on_video(video_capture, predictor, max_frames, video_file_timestamp, vid
             break
 
 
-def process_video(video_file, categories):
+def process_video(video_file, categories, passpoints_file_path, valid_area_file_path):
     """
     main entry point which runs the trajectory extraction in a loop
     """
@@ -211,7 +213,7 @@ def process_video(video_file, categories):
     video_capture, predictor, video_writer, max_frames = prepare_video_processing(video_file, video_source_folder, cfg)
     for visualization in tqdm(
             run_on_video(video_capture, predictor, max_frames, extract_video_file_timestamp(video_file),
-                         video_source_folder, categories),
+                         video_source_folder, passpoints_file_path, valid_area_file_path, categories),
             total=max_frames):
         video_writer.write(visualization)
     video_capture.release()
@@ -231,4 +233,7 @@ if __name__ == '__main__':
 
     video_file = args.video
     if args.video:
-        process_video(args.video, categories)
+        path = os.path.abspath(__file__)
+        dir_path = os.path.dirname(path)
+        passpoints_file_path = os.path.abspath(args.passpoints)
+        process_video(args.video, categories, args.passpoints, args.valid_area)

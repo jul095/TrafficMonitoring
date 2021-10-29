@@ -63,6 +63,9 @@ python run_on_video.py --video ./videos/small_example_video.mp4
 ```
 
 The annotated video with segmentations will be stored in [videos_output](./traffic_monitoring/videos/videos_output) and the trajectory file in [trajectory_output](./traffic_monitoring/videos/trajectory_output). The both result folders will be created by the script.
+If you want to use this algorithm on another intersection or with different zoom level of the camera, please pass an passpoint-file with `--passpoints`. 
+The blue area shown in the gif is the valid area, only segments in this area will be estimated to limit bad segmentations on the borders.
+To adapt this, provide a csv file with pixel coordinates like this [example](./traffic_monitoring/config/valid_area.csv) with `--passpoints`
 
 The trajectory file provides following structure: 
 
