@@ -49,8 +49,7 @@ python -m pip install detectron2 -f \
   https://dl.fbaipublicfiles.com/detectron2/wheels/cu110/torch1.7/index.html
 ```
 3. Provide the Network Weights for the Mask R-CNN:
-- Use [Git LFS](https://git-lfs.github.com/) to get the [model_weights](./traffic_monitoring/model_weights) in the right folder and download them.
-- If you don't want to use GIT LFS, you can download the weights and store them in the [model_weights](./traffic_monitoring/model_weights) folder. You can find two different versions of weights, one default [model 4 cats](https://drive.google.com/file/d/1ighKwkCM24oC5ZtSd5Wn3nFJF-LtcSUb/view?usp=sharing) is trained on segmentation 4 different categories (Truck, Car, Bicycle and Person) and the other [model 16 cats](https://drive.google.com/file/d/1h3ZiJZgoKQ211ZSVRC6IKuVpXNZJBIs2/view) is trained on 16 categories but with bad results in some categories.
+- You have to download the weights and store them in the [model_weights](./traffic_monitoring/model_weights) folder. You can find two different versions of weights, one default [model 4 cats](https://drive.google.com/file/d/1ighKwkCM24oC5ZtSd5Wn3nFJF-LtcSUb/view?usp=sharing) is trained on segmentation 4 different categories (Truck, Car, Bicycle and Person) and the other [model 16 cats](https://drive.google.com/file/d/1h3ZiJZgoKQ211ZSVRC6IKuVpXNZJBIs2/view) is trained on 16 categories but with bad results in some categories.
 
 ## Getting Started Video
 
