@@ -1,0 +1,27 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: camera-recorder
+  labels:
+    name: camera-recorder
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: camera-recorder-deployment
+  namespace: camera-recorder
+  labels:
+    app: camera-recorder
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: camera-recorder
+  template:
+    metadata:
+      labels:
+        app: camera-recorder
+    spec:
+      containers:
+      - name: camera-recorder
+        image: fkkstudents.azurecr.io/recording/camera_recorder:latest
