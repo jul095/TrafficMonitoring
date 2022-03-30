@@ -1,3 +1,22 @@
+## deploy 24/7 recording to aks
+To have a 24/7 recording running in kubernetes and storing the results to azure blob follow these steps
+````bash
+az login
+az acr login --name fkkstudents
+````
+make sure you are in the ./camera_stream_recording/src folder
+````bash
+docker build -t fkkstudents.azurecr.io/recording/camera_recorder .  
+docker push fkkstudents.azurecr.io/recording/camera_recorder
+````
+
+get .env file with the correct credentials (a backup is stored in the SaveNow storage account fkk247/credentials)
+
+````bash
+az aks get-credentials --resource-group fkkstudents --name fkkstudents
+kubectl apply -f deployament.yaml
+````
+
 ## Capture Videostream
 
 This tool has two basic mode. At first you can generate training data for manual labeling in cvat [here is the relevant fork](https://github.com/jul095/cvat).
