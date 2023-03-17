@@ -1,0 +1,58 @@
+{
+    "Status": "Processed",
+    "startTime": "2021-11-19 10:51:21",
+    "endTime": "2021-11-19 10:46:20",
+    "videoPath": "./videos/small_example_video.mp4",
+    "timestamp": "small_example_video",
+    "csvPath": "./videos/trajectory_output/small_example_video_trajectories.csv",
+    "frame_count": 457,
+    "duration": 15.233333333333333,
+    "offset_X_world": 678000,
+    "offset_Y_world": 5400000,
+    "camera_matrix": [
+        [
+            1955.4512939453125,
+            0.0,
+            960.2924351133115
+        ],
+        [
+            0.0,
+            2225.641357421875,
+            627.5722393822944
+        ],
+        [
+            0.0,
+            0.0,
+            1.0
+        ]
+    ],
+    "rotation_matrix": [
+        [
+            0.5932354361094844,
+            -0.801115212881517,
+            -0.0792851375340422
+        ],
+        [
+            -0.48164592022052,
+            -0.2742896255755827,
+            -0.832335514583233
+        ],
+        [
+            0.6450495522662726,
+            0.5319582850105904,
+            -0.5485721995596139
+        ]
+    ],
+    "translation_vector": [
+        [
+            4144.775834449284
+        ],
+        [
+            1528.9225671349313
+        ],
+        [
+            -2864.0255334744243
+        ]
+    ],
+    "numberOfTrackIds": 57
+}
