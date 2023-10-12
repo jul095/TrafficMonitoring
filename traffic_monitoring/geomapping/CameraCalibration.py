@@ -166,6 +166,9 @@ class CameraCalibration:
         pixel = np.around(pixel, 2).astype(dtype=np.float32)
         return np.asarray([pixel[0][0], pixel[1][0]], dtype=np.float32)
 
+    def return_world_to_pixel_parameters(self):
+        return OFFSET_X_WORLD, OFFSET_Y_WORLD, self.camera_matrix, self.rotation_matrix, self.translation_vector
+
 
 if __name__ == '__main__':
     camera = CameraCalibration()

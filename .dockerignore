@@ -1,0 +1,13 @@
+docs
+.gitignore
+.gitattributes
+CITATION.cff
+*.md
+LICENSE
+example_videos
+training_log_results
+Dockerfile
+venv
+
+# recursive exclusion
+**/*.mp4
