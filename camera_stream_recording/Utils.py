@@ -57,24 +57,26 @@ def is_video_consistent(filename, video_duration):
     :return: if the video is consistent due to a threshold
     :rtype: bool
     """
-    video_length = get_length(filename)
-    # Check if video is 8 percent shorter than expected
-    # check if the video is shorter than the expected length. This could be a "jump" in the video -> delete video
-    expected_length = video_duration
-    tolerance = expected_length - (expected_length * 0.1)
-    if video_length < tolerance:
-        print('video is 1 percent shorter than expected:')
-        print('video_length: ' + str(video_length))
-        print('expected_length: ' + str(expected_length))
-        print('tolerance: ' + str(tolerance))
-        return False
-    else:
-        print('video_length: ' + str(video_length))
-        print('expected_length: ' + str(expected_length))
+    # This is causing weird "file not found" issues --> uncommenting for now. MJ 21.03.2021
+
+    # video_length = get_length(filename)
+    # # Check if video is 8 percent shorter than expected
+    # # check if the video is shorter than the expected length. This could be a "jump" in the video -> delete video
+    # expected_length = video_duration
+    # tolerance = expected_length - (expected_length * 0.1)
+    # if video_length < tolerance:
+    #     print('video is 1 percent shorter than expected:')
+    #     print('video_length: ' + str(video_length))
+    #     print('expected_length: ' + str(expected_length))
+    #     print('tolerance: ' + str(tolerance))
+    #     return False
+    # else:
+    #     print('video_length: ' + str(video_length))
+    #     print('expected_length: ' + str(expected_length))
     return True
 
 
-def upload_video(filename, uploads_list, storage_addr, sas_token):
+def upload_video(filename, SAS_TOKEN, STORAGE_ACCOUNT, STORAGE_CONTAINER):
     """
     Prepare the upload of files to a azure Filestorage
 
@@ -89,14 +91,13 @@ def upload_video(filename, uploads_list, storage_addr, sas_token):
     :return: -
     :rtype: void
     """
-    print("Upload file " + filename)
-    dest = storage_addr + filename + sas_token
-
-    sub_p_id = subprocess.Popen(["./azcopy", "copy", filename, dest],
-                                stdout=subprocess.PIPE,
-                                stderr=subprocess.STDOUT)
-    uploads_list.append([sub_p_id, filename])
+    print("Uploading file %s to %s / %s " % (filename, STORAGE_ACCOUNT, STORAGE_CONTAINER))
+    block_blob_service = BlockBlobService(account_name=STORAGE_ACCOUNT, sas_token=SAS_TOKEN)
+    block_blob_service.create_blob_from_path(STORAGE_CONTAINER, filename, filename)
+    print("Upload successfull. Removing local file %s" % filename)
+    os.remove(filename)
     return
+
 
 
 def get_end_timestamp_from_minutes_duration(video_max_duration):

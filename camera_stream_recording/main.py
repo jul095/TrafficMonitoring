@@ -37,7 +37,6 @@ class MainCaptureHandling:
         self.fourcc = cv2.VideoWriter_fourcc('M', 'J', 'P', 'G')
         self.link = f"rtsp://{username}:{password}@{ip_addr}:80/axis-media/media.amp?streamprofile=rtspStreamLow"
         self.cap = cv2.VideoCapture(self.link)
-        print(self.link)
         self.uploads = []
         self.is_uploaded = is_uploaded
         if not self.cap.isOpened():
@@ -45,16 +44,17 @@ class MainCaptureHandling:
 
     def start_capture_one_video(self):
         """Initialize the Video Writer"""
-        vid_name = generate_unique_name() + ".mp4"
-        out = cv2.VideoWriter(vid_name, self.fourcc, 30.0,
-                              (1920, 1080))
+        vid_name = generate_unique_name() + ".avi"
+        fourcc = cv2.VideoWriter_fourcc(*'MPEG')
+        out = cv2.VideoWriter(vid_name, fourcc, 30.0,
+                                  (1920, 1080))
         return vid_name, out
 
     def handle_video_saving(self, filename, sub_procs_list, video_duration):
         """Method will start uploading videos and delete the files if there are not consistent"""
         if is_video_consistent(filename, video_duration):
             if self.is_uploaded:
-                upload_video(filename, sub_procs_list, config('STORAGE_ADDR'), config('SAS_TOKEN'))
+                upload_video(filename, config('SAS_TOKEN'), config('STORAGE_ACCOUNT'),config('STORAGE_CONTAINER') )
             else:
                 print("No upload, because the script runs locally\n")
         else:
@@ -66,7 +66,7 @@ class MainCaptureHandling:
         """Method will start uploading and keep the files if there are not consistent"""
         if is_video_consistent(filename, video_duration):
             if self.is_uploaded:
-                upload_video(filename, sub_procs_list, config('STORAGE_ADDR'), config('SAS_TOKEN'))
+                upload_video(filename, config('SAS_TOKEN'), config('STORAGE_ACCOUNT'),config('STORAGE_CONTAINER') )
             else:
                 print("No upload, because the script runs locally\n")
         else:
@@ -130,7 +130,7 @@ class MainCaptureHandling:
 
         cam_connect = self.cap.read()
         time.sleep(0.5)
-        cv2.namedWindow("CameraView", cv2.WINDOW_NORMAL)
+        # cv2.namedWindow("CameraView", cv2.WINDOW_NORMAL)
         while True:
             prev_stream_frame = stream_frame
             try:
@@ -164,7 +164,7 @@ class MainCaptureHandling:
                 vis_frame = Display("Connect: " + str(connect_count), vis_frame,
                                     (5, 80)).overlay_text()
                 if cam_connect:
-                    cv2.imshow("CameraView", vis_frame)
+                    # cv2.imshow("CameraView", vis_frame)
                     self.out.write(stream_frame)
 
                     if end_timestamp is not None:
@@ -187,7 +187,7 @@ class MainCaptureHandling:
         self.handle_video_saving_specific_time(self.vid_name, self.uploads,
                                                expected_length)
         self.check_for_completed_uploads(self.uploads, None)
-        cv2.destroyAllWindows()
+        # cv2.destroyAllWindows()
         # self.match_with_first_timestamp()
 
     def match_with_first_timestamp(self):
@@ -299,6 +299,10 @@ class MainCaptureHandling:
             if datetime.datetime.now() >= end_time_script:
                 break
 
+def entry_for_async_recording():
+    video_capturing = MainCaptureHandling(config('CAMERA_USER_NAME'),
+                                          config('PASSWORD'), config('CAMERA_IP_ADDR'), True)
+    video_capturing.capture_video_stream_for_specific_time(get_end_timestamp_from_minutes_duration(1))
 
 if __name__ == "__main__":
 
@@ -352,6 +356,7 @@ if __name__ == "__main__":
         # Run only one planned capturing of one video user defined
         if args.video_duration:
             vdm_duration = args.video_duration
+            print("running planned video capturing for a specific time")
             video_capturing.capture_video_stream_for_specific_time(
                 get_end_timestamp_from_minutes_duration(vdm_duration))
         else:
